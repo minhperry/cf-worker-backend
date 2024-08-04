@@ -1,0 +1,114 @@
+{
+    "coding": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/minhperry",
+            "logo": "icons/github.svg",
+            "hidden": false
+        },
+        {
+            "name": "GitLab",
+            "url": "https://gitlab.com/minhperry",
+            "logo": "icons/gitlab.svg",
+            "hidden": false
+        },
+        {
+            "name": "CodeForces",
+            "url": "https://codeforces.com/profile/redmcgn",
+            "logo": "icons/brands/codeforces.svg",
+            "hidden": false
+        }
+    ],
+    "socials": [
+        {
+            "name": "LinkedIn",
+            "url": "https://www.linkedin.com/in/ptm2002",
+            "logo": "icons/brands/linkedin.svg",
+            "hidden": true
+        },
+        {
+            "name": "Facebook",
+            "url": "https://www.facebook.com/redstone.minecraft.m/",
+            "logo": "icons/brands/facebook.svg",
+            "hidden": true
+        },
+        {
+            "name": "Instagram",
+            "url": "https://www.instagram.com/minhperry02",
+            "logo": "icons/brands/instagram.svg",
+            "hidden": false
+        },
+        {
+            "name": "Twitter",
+            "url": "https://twitter.com/minhperryy",
+            "logo": "icons/brands/twitter.svg",
+            "hidden": false
+        },
+        {
+            "name": "Reddit",
+            "url": "https://www.reddit.com/user/vietnam_redstoner",
+            "logo": "icons/brands/reddit.svg",
+            "hidden": false
+        },
+        {
+            "name": "Threads",
+            "url": "https://www.threads.net/@minhperry02",
+            "logo": "icons/brands/threads.svg",
+            "hidden": false
+        }
+    ],
+    "media": [
+        {
+            "name": "YouTube",
+            "url": "https://www.youtube.com/channel/UCvhMyLNH5kOD6Cjq1rGWqAg",
+            "logo": "icons/brands/youtube.svg",
+            "hidden": false
+        },
+        {
+            "name": "TikTok",
+            "url": "https://www.tiktok.com/@minhperry02",
+            "logo": "icons/brands/tiktok.svg",
+            "hidden": false
+        },
+        {
+            "name": "Twitch",
+            "url": "https://www.twitch.tv/minhperry",
+            "logo": "icons/brands/twitch.svg",
+            "hidden": false
+        }
+    ],
+    "games": [
+        {
+            "name": "Steam",
+            "url": "https://steamcommunity.com/id/minhperry",
+            "logo": "icons/brands/steam.svg",
+            "hidden": false
+        },
+        {
+            "name": "osu!",
+            "url": "https://osu.ppy.sh/users/16509922",
+            "logo": "icons/brands/osu.svg",
+            "hidden": false
+        },
+        {
+            "name": "Minecraft",
+            "url": "https://namemc.com/profile/minhperry02",
+            "logo": "icons/brands/minecraft.svg",
+            "hidden": false
+        }
+    ],
+    "contacts": [
+        {
+            "name": "Email",
+            "url": "mailto:minhpt2002@gmail.com",
+            "logo": "icons/brands/gmail.svg",
+            "hidden": true
+        },
+        {
+            "name": "University Mail",
+            "url": "mailto:tuanminh.phan@tu-dortmund.de",
+            "logo": "icons/brands/unimail.svg",
+            "hidden": true
+        }
+    ]
+}
