@@ -1,26 +1,22 @@
-import { AutoRouter, cors, IRequest } from 'itty-router' // ~1kB
-import { getSocialData } from './data/social-data'
+import { Hono } from 'hono'
+import { cors } from 'hono/cors'
+import { socialDataHandler } from './data/social-data'
+import { skyblockXpHandler } from './data/skyblock'
 
-type Environment = { KV: KVNamespace }
-type CFArgs = [Environment, ExecutionContext]
-
-const { preflight, corsify } = cors({
-  origin: '*',
-  allowMethods: '*',
-}) 
-const router = AutoRouter<IRequest, CFArgs>({
-  before: [preflight],
-  finally: [corsify]
+const corsHeaders = cors({
+    origin: ['http://localhost:4200', 'https://minhperry.pages.dev/','https://skysim.pages.dev/'],
+    allowMethods: ['GET', 'OPTIONS'],
 })
 
-let isPublic = true
+const app = new Hono()
+app.use(
+    '/socials',
+    cors()
+)
 
-router
-  .get('/socials', getSocialData)
-  .get('/public', (req, env) => new Response(
-    JSON.stringify({ publicMode: isPublic }), {
-      headers: { 'Content-Type': 'application/json' },
-  }))
-  .get('*', () => new Response('Not found', { status: 404 }))
+app
+    .get('/', (c) => c.html('<p>It worked!</p>'))
+    .get('/socials', socialDataHandler)
+    .get('/skyblock/xp/:name', skyblockXpHandler)
 
-export default router
+export default app
