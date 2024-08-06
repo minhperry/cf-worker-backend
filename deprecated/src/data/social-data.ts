@@ -1,4 +1,4 @@
-import socials from '../../data/socials.json';
+import socials from '../../../data/socials.json';
 
 type TKey = keyof typeof socials
 
