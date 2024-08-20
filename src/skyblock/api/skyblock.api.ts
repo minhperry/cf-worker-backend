@@ -12,7 +12,7 @@ class SkyblockAPI {
         const key = SkyblockAPI.context.env.HYPIXEL
         const user = SkyblockAPI.context.req.param('name')
 
-        const userUUID = await MojangAPI.getUserU(user)
+       // const userUUID = await MojangAPI.getUserU(user)
 
 
     }
