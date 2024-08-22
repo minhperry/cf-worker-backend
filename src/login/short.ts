@@ -1,12 +1,12 @@
 import { Context } from "hono";
+import { Md5 } from 'ts-md5';
 
 export async function createShortUrlHandler(c: Context) {
     const myKey = c.env.MYKEY
     const kv = c.env.shortener
-
     const providedKey = c.req.header('X-Longass-Api-Header-Name')
 
-    if (providedKey !== myKey) {
+    if (providedKey?.split('_')[1] !== Md5.hashStr(myKey)) {
         return c.json({ error: 'Unauthorized' }, 401)
     }
 
