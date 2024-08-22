@@ -29,7 +29,8 @@ export async function createShortUrlHandler(c: Context) {
         kv.put(key, value)
         return c.json({ created: { [key]: value }}, 201)
     } catch (err) {
-        console.log(err)
+        console.error(err)
+        console.trace(err)
         return c.json({ error: 'Internal Server Error' }, 500)
     }
 }
