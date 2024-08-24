@@ -3,7 +3,7 @@ import { cors } from 'hono/cors'
 import { socialDataHandler } from './data/social-data'
 import { skyblockXpHandler } from './skyblock/skyblock'
 import { verifyHash } from './login/md5'
-import { createShortUrlHandler } from './login/short'
+import { Shorts } from './login/short'
 
 type Binding =  {
     HYPIXEL: string    
@@ -18,6 +18,8 @@ app.use(
     cors()
 )
 
+
+
 app
     .get('/', (c) => c.html('<p>It worked!</p>'))
     .get('/socials', socialDataHandler)
@@ -25,7 +27,9 @@ app
     .get('/info', (c) => c.json({ source: 'https://github.com/minhperry/cf-worker-backend' }))
     .get('/validate/:md5', (c) => verifyHash(c))
 
-app.post('/short', async (c) => createShortUrlHandler(c))
+app.post('/short', async (c) => new Shorts(c).create())
+
+app.get('/short', async (c) => new Shorts(c).list())
 
 export default app
 

@@ -1,36 +1,74 @@
 import { Context } from "hono";
 import { Md5 } from 'ts-md5';
 
-export async function createShortUrlHandler(c: Context) {
-    const myKey = c.env.MYKEY
-    const kv = c.env.shortener
-    const providedKey = c.req.header('X-Longass-Api-Header-Name')
+export class Shorts {
+    private myKey: string
+    private _kv: KVNamespace
+    private key: string | undefined
 
-    if (providedKey?.split('_')[1] !== Md5.hashStr(myKey)) {
-        return c.json({ error: 'Unauthorized' }, 401)
+    constructor(private c: Context) {
+        this.myKey = c.env.MYKEY
+        this._kv = c.env.shortener
+        this.key = c.req.header('X-Longass-Api-Header-Name')
     }
 
-    try {
-        const { key, value } = await c.req.json()
+    get kv() {
+        return this._kv
+    }
 
-        if (!key) {
-            return c.json({ error: 'Key is required' }, 400)
+    auth(): boolean {
+        if (this.key?.split('_')[1] == Md5.hashStr(this.myKey)) {
+            return false
+        }
+        return true
+    }
+
+    async create() {
+        if (this.auth()) {
+            return this.c.json({ error: 'Unauthorized' }, 401)
         }
 
-        if (!value) {
-            return c.json({ error: 'Value is required' }, 400)
+        try {
+            const { key, value } = await this.c.req.json()
+
+            if (!key) {
+                return this.c.json({ error: 'Key is required' }, 400)
+            }
+
+            if (!value) {
+                return this.c.json({ error: 'Value is required' }, 400)
+            }
+
+            const existing = await this.kv.get(key)
+            if (existing !== null) {
+                return this.c.json({ error: 'Key already exists' }, 409)
+            } 
+            
+            await this.kv.put(key, value)
+            return this.c.json({ created: { [key]: value }}, 201)
+        } catch (err) {
+            console.error(err)
+            console.trace(err)
+            return this.c.json({ error: 'Internal Server Error' }, 500)
+        }
+    }
+
+    async list() {
+        if (this.auth()) {
+            return this.c.json({ error: 'Unauthorized' }, 401)
         }
 
-        const existing = await kv.get(key)
-        if (existing !== null) {
-            return c.json({ error: 'Key already exists' }, 409)
-        } 
-        
-        kv.put(key, value)
-        return c.json({ created: { [key]: value }}, 201)
-    } catch (err) {
-        console.error(err)
-        console.trace(err)
-        return c.json({ error: 'Internal Server Error' }, 500)
+        try {
+            const keyList = await this.kv.list()
+            let retObj = []
+            for (const key of keyList.keys) {
+                retObj.push({ [key.name]: await this.kv.get(key.name) })
+            }
+            return this.c.json({ result: retObj })
+        } catch (err) {
+            console.error(err)
+            console.trace(err)
+            return this.c.json({ error: 'Internal Server Error' }, 500)
+        }
     }
 }
