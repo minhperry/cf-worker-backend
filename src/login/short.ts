@@ -62,7 +62,10 @@ export class Shorts {
             const keyList = await this.kv.list()
             let retObj = []
             for (const key of keyList.keys) {
-                retObj.push({ [key.name]: await this.kv.get(key.name) })
+                retObj.push({ 
+                    key: key.name,
+                    url: await this.kv.get(key.name) 
+                })
             }
             return this.c.json({ result: retObj })
         } catch (err) {
