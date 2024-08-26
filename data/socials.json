@@ -54,7 +54,7 @@
             "name": "Threads",
             "url": "https://www.threads.net/@minhperry02",
             "logo": "icons/brands/threads.svg",
-            "hidden": false
+            "hidden": true
         }
     ],
     "media": [

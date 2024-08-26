@@ -1,10 +1,11 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { socialDataHandler } from './data/social-data'
-import { skyblockXpHandler } from './skyblock/skyblock'
-import { verifyHash } from './login/md5'
-import { Shorts } from './login/short'
 import { getGithubCommits } from './data/github'
+import { loginHandler } from './login/auth'
+import { authMW } from './middleware/auth'
+import { createHandler, listHandler } from './login/short'
+import { serveDanhSach } from './data/danhsach'
 
 type Binding =  {
     HYPIXEL: string    
@@ -12,6 +13,7 @@ type Binding =  {
     MYKEY: string
     shortener: KVNamespace
     GITHUB: string
+    JWT_SIGNER: string
 }
 
 const app = new Hono<{Bindings: Binding}>()
@@ -23,13 +25,15 @@ app.use(
 app
     .get('/', (c) => c.html('<p>It worked!</p>'))
     .get('/socials', socialDataHandler)
-    .get('/skyblock/xp/:name', skyblockXpHandler)
-    .get('/info', (c) => c.json({ source: 'https://github.com/minhperry/cf-worker-backend' }))
-    .get('/validate/:md5', (c) => verifyHash(c))
-    .get('/short', async (c) => new Shorts(c).list())
+    .get('/info', (c) => c.redirect('https://github.com/minhperry/cf-worker-backend'))
     .get('/commits', async (c) => getGithubCommits(c, 50))
+    .get('/danhsach', (c) => serveDanhSach(c))
 
-app.post('/short', async (c) => new Shorts(c).create())
+app.post('/auth/login', loginHandler)
+
+app.use('/short', authMW)
+    .post('/short', createHandler)
+    .get('/short', listHandler)
 
 export default app
 

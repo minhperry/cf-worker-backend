@@ -1,7 +1,7 @@
 import { Context } from "hono";
 import { Md5 } from 'ts-md5';
 
-export class Shorts {
+class Shorts {
     private myKey: string
     private _kv: KVNamespace
     private key: string | undefined
@@ -16,18 +16,7 @@ export class Shorts {
         return this._kv
     }
 
-    auth(): boolean {
-        if (this.key?.split('_')[1] == Md5.hashStr(this.myKey)) {
-            return false
-        }
-        return true
-    }
-
     async create() {
-        if (this.auth()) {
-            return this.c.json({ error: 'Unauthorized' }, 401)
-        }
-
         try {
             const { key, value } = await this.c.req.json()
 
@@ -54,10 +43,6 @@ export class Shorts {
     }
 
     async list() {
-        if (this.auth()) {
-            return this.c.json({ error: 'Unauthorized' }, 401)
-        }
-
         try {
             const keyList = await this.kv.list()
             let retObj = []
@@ -74,4 +59,12 @@ export class Shorts {
             return this.c.json({ error: 'Internal Server Error' }, 500)
         }
     }
+}
+
+export const listHandler = async (c: Context) => new Shorts(c).list()
+export const createHandler = async (c: Context) => {
+    const user = c.get('user')
+    if (user.role === 'admin' || user.role === 'recruiter') {
+        return new Shorts(c).create()
+    } else return c.json({ error: 'Unauthorized' }, 401)
 }
