@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { html, raw } from "hono/html";
+import { html } from "hono/html";
 
 let list = {
     'nui': 'Nui chữ nếu đủ cân',
@@ -42,7 +42,7 @@ export const serveDanhSach = (c: Context) => {
             `)}
         </ul>
         <script>
-                
+
                 function saveCheckboxState() {
                     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
                     checkboxes.forEach(checkbox => {
@@ -53,8 +53,7 @@ export const serveDanhSach = (c: Context) => {
                 function loadCheckboxState() {
                     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
                     checkboxes.forEach(checkbox => {
-                        const checked = localStorage.getItem(checkbox.id) === 'true';
-                        checkbox.checked = checked;
+                        checkbox.checked = localStorage.getItem(checkbox.id) === 'true';;
                     });
                 }
 
@@ -66,4 +65,4 @@ export const serveDanhSach = (c: Context) => {
         </script>
         </body>
         `)
-} 
+}
