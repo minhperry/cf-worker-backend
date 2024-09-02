@@ -8,5 +8,6 @@ node_modules
 # Webstorm
 .idea
 
-# Personal data
-data
+# Personal json-data
+json-data
+
