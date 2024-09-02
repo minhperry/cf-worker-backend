@@ -24,7 +24,7 @@
             "name": "LinkedIn",
             "url": "https://www.linkedin.com/in/ptm2002",
             "logo": "icons/brands/linkedin.svg",
-            "hidden": true
+            "hidden": false
         },
         {
             "name": "Facebook",
@@ -102,13 +102,13 @@
             "name": "Email",
             "url": "mailto:minhpt2002@gmail.com",
             "logo": "icons/brands/gmail.svg",
-            "hidden": true
+            "hidden": false
         },
         {
             "name": "University Mail",
             "url": "mailto:tuanminh.phan@tu-dortmund.de",
             "logo": "icons/brands/unimail.svg",
-            "hidden": true
+            "hidden": false
         }
     ]
 }

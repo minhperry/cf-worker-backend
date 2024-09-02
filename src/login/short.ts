@@ -1,15 +1,12 @@
 import { Context } from "hono";
-import { Md5 } from 'ts-md5';
 
 class Shorts {
     private myKey: string
-    private _kv: KVNamespace
-    private key: string | undefined
+    private readonly _kv: KVNamespace
 
     constructor(private c: Context) {
         this.myKey = c.env.MYKEY
         this._kv = c.env.shortener
-        this.key = c.req.header('X-Longass-Api-Header-Name')
     }
 
     get kv() {
@@ -31,8 +28,8 @@ class Shorts {
             const existing = await this.kv.get(key)
             if (existing !== null) {
                 return this.c.json({ error: 'Key already exists' }, 409)
-            } 
-            
+            }
+
             await this.kv.put(key, value)
             return this.c.json({ created: { [key]: value }}, 201)
         } catch (err) {
@@ -47,9 +44,9 @@ class Shorts {
             const keyList = await this.kv.list()
             let retObj = []
             for (const key of keyList.keys) {
-                retObj.push({ 
+                retObj.push({
                     key: key.name,
-                    url: await this.kv.get(key.name) 
+                    url: await this.kv.get(key.name)
                 })
             }
             return this.c.json({ result: retObj })

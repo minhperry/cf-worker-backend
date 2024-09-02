@@ -3,6 +3,11 @@ import { jwtVerify } from "jose";
 
 export const authMW = async (c: Context, next: Next) => {
     const header = c.req.header('Authorization')
+
+    if (!header) {
+        return next()
+    }
+
     if (!header || !header.startsWith('Bearer ')) {
         return c.json({ error: 'Unauthorized' }, 401)
     }

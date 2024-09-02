@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import { socialDataHandler } from './data/social-data'
+import { socialDataHandler2 } from './data/social-data';
 import { getGithubCommits } from './data/github'
 import { loginHandler } from './login/auth'
 import { authMW } from './middleware/auth'
@@ -8,7 +8,7 @@ import { createHandler, listHandler } from './login/short'
 import { serveDanhSach } from './data/danhsach'
 
 type Binding =  {
-    HYPIXEL: string    
+    HYPIXEL: string
     PASSWORD: string
     MYKEY: string
     shortener: KVNamespace
@@ -16,7 +16,11 @@ type Binding =  {
     JWT_SIGNER: string
 }
 
-const app = new Hono<{Bindings: Binding}>()
+type Variables = {
+    user: string
+}
+
+const app = new Hono<{Bindings: Binding, Variables: Variables}>()
 app.use(
     '/*',
     cors()
@@ -24,19 +28,18 @@ app.use(
 
 app
     .get('/', (c) => c.html('<p>It worked!</p>'))
-    .get('/socials', socialDataHandler)
+    .get('/socials', (c) => c.json({message: 'Please migrate to /socials/v2'}, 404))
     .get('/info', (c) => c.redirect('https://github.com/minhperry/cf-worker-backend'))
     .get('/commits', async (c) => getGithubCommits(c, 50))
     .get('/danhsach', (c) => serveDanhSach(c))
 
 app.post('/auth/login', loginHandler)
 
-app.use('/short', authMW)
-    .post('/short', createHandler)
-    .get('/short', listHandler)
+app.use('/socials/v2', authMW)
+    .get('/socials/v2', async (c) => socialDataHandler2(c))
+
+app.use('/short', authMW).post('/short', createHandler).get('/short', listHandler)
+// app.use('/me', authMW).get('/me')
+
 
 export default app
-
-/*
-    
-*/
