@@ -4,3 +4,6 @@ node_modules
 # Wrangler
 .dev.vars
 .wrangler
+
+# Webstorm
+.idea

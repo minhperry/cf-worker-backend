@@ -8,9 +8,11 @@ let list = {
     'ca-phe': 'Cà phê Trung Nguyên',
     'nvh': 'Ngũ vị hương',
     'tra': 'Trà làm trà đá',
-    'do-kho': 'Mì, miến, phở khô, (mì gói)',
+    'do-kho': 'Mì, miến, phở khô, bánh canh, (mì gói), nói chung là 7 7 49 loại mì khô',
     'mi-trung':'Mì trứng',
-    'hsk': 'Hải sản khô'
+    'hsk': 'Hải sản khô',
+    'hao2': 'Muối chấm Hảo Hảo',
+    'sot-ga': 'Mấy cái sốt để nấu với thịt gà'
 }
 
 export const serveDanhSach = (c: Context) => {
@@ -29,7 +31,8 @@ export const serveDanhSach = (c: Context) => {
         </head>
         <body>
         <h1>Danh sách</h1>
-        <p>(trong ngoặc) là ko cần thiết lắm. checkbox sẽ được lưu trên máy khi thoát.</p>
+        <p style="font-size: 22px">(trong ngoặc) là ko cần thiết lắm. checkbox sẽ được lưu trên máy khi thoát.</p>
+        <p style="font-size: 22px">hôm nào đi siêu thị thì gọi video.</p>
         <ul>
             ${Object.entries(list).map(([key, value]) => html`
                 <li>

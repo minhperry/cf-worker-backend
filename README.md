@@ -7,11 +7,13 @@ Just clone this repo
 
 # Developement
 
-For developement, create .dev.vars with key `HYPIXEL_API`:
-```py
-HYPIXEL_API="your-hypixel-api-key-here"
+For development, create .dev.vars with key `YOUR_KEY_HERE`:
+```js
+YOUR_KEY_HERE="any-of-your.secret-key-here"
 ```
 
 # Deploy
 
-Deploy with `npx wrangler secret put HYPIXEL_API` and follow the instructions. Refer to [this guide](https://developers.cloudflare.com/workers/configuration/secrets/#adding-secrets-to-your-project) 
+First, upload the secrets with `npx wrangler secret put YOUR_KEY_HERE` for each secret key you have and follow the instructions. Refer to [this guide](https://developers.cloudflare.com/workers/configuration/secrets/#adding-secrets-to-your-project).
+
+Then, simply deploy with `npx wrangler deploy`.
