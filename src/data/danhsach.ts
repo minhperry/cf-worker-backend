@@ -8,7 +8,8 @@ let list = {
     'ca-phe': 'Cà phê Trung Nguyên',
     'nvh': 'Ngũ vị hương',
     'tra': 'Trà làm trà đá',
-    'do-kho': 'Mì, miến, phở khô, bánh canh, (mì gói), nói chung là 7 7 49 loại mì khô',
+    'do-kho': 'Mì, miến, phở khô, bánh canh, (mì gói), nói chung là mì khô',
+    'mi-tom': '(Mỳ tôm Kokomi, Hảo Hảo, Omachi, cháo khô, vv. mỗi vị một gói)',
     'mi-trung':'Mì trứng',
     'hsk': 'Hải sản khô',
     'hao2': 'Muối chấm Hảo Hảo',
@@ -53,7 +54,7 @@ export const serveDanhSach = (c: Context) => {
                 function loadCheckboxState() {
                     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
                     checkboxes.forEach(checkbox => {
-                        checkbox.checked = localStorage.getItem(checkbox.id) === 'true';;
+                        checkbox.checked = localStorage.getItem(checkbox.id) === 'true';
                     });
                 }
 
