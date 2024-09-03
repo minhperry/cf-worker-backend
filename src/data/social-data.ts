@@ -1,6 +1,7 @@
 import socials from '../../json-data/socials.json';
 import socialsAuth from '../../json-data/socials-auth.json'
 import { Context } from 'hono';
+import { getUserField } from '../utils/jwt';
 
 type Entry = {
     name: string,
@@ -10,7 +11,7 @@ type Entry = {
 }
 
 export const socialDataHandler2 = (c: Context) => {
-    const user = c.get('user')
+    const user = getUserField(c)
 
     const whichData = (user !== undefined) ? socialsAuth : socials
 

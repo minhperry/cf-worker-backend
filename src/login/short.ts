@@ -1,4 +1,5 @@
 import { Context } from "hono";
+import { getField } from '../utils/jwt';
 
 class Shorts {
     private myKey: string
@@ -60,7 +61,7 @@ class Shorts {
 
 export const listHandler = async (c: Context) => new Shorts(c).list()
 export const createHandler = async (c: Context) => {
-    const user = c.get('user')
+    const user = getField(c, 'user')
     if (user.role === 'admin' || user.role === 'recruiter') {
         return new Shorts(c).create()
     } else return c.json({ error: 'Unauthorized' }, 401)

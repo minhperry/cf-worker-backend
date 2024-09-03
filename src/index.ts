@@ -6,6 +6,7 @@ import { loginHandler } from './login/auth'
 import { authMW } from './middleware/auth'
 import { createHandler, listHandler } from './login/short'
 import { serveDanhSach } from './data/danhsach'
+import { personalHandler } from './data/me';
 
 type Binding =  {
     HYPIXEL: string
@@ -39,7 +40,8 @@ app.use('/socials/v2', authMW)
     .get('/socials/v2', async (c) => socialDataHandler2(c))
 
 app.use('/short', authMW).post('/short', createHandler).get('/short', listHandler)
-// app.use('/me', authMW).get('/me')
+app.use('/me', authMW).get('/me', personalHandler)
 
+app.get('/*', (c) => c.json({error: 'Endpoint not found'}, 404))
 
 export default app
