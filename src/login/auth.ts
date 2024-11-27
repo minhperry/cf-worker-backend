@@ -2,7 +2,12 @@ import { Context } from "hono"
 import { genJWT } from "../utils/jwt"
 
 export const loginHandler = async (c: Context) => {
-    const { password } = await c.req.json()
+    let password;
+    try {
+        let { password } = await c.req.json()
+    } catch (e) {
+        return c.json({ error: 'Invalid payload' }, 400)
+    }
     const { PASSWORD, MYKEY, JWT_SIGNER } = c.env
 
     if (password === PASSWORD) {

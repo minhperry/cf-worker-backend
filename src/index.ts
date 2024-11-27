@@ -4,9 +4,6 @@ import { socialDataHandler2 } from './data/social-data';
 import { getGithubCommits } from './data/github'
 import { loginHandler } from './login/auth'
 import { authMW } from './middleware/auth'
-import { createHandler, listHandler } from './login/short'
-import { serveDanhSach } from './data/danhsach'
-import { personalHandler } from './data/me';
 
 type Binding =  {
     HYPIXEL: string
@@ -32,15 +29,15 @@ app
     .get('/socials', (c) => c.json({message: 'Please migrate to /socials/v2'}, 404))
     .get('/info', (c) => c.redirect('https://github.com/minhperry/cf-worker-backend'))
     .get('/commits', async (c) => getGithubCommits(c, 50))
-    .get('/danhsach', (c) => serveDanhSach(c))
+    //.get('/danhsach', (c) => serveDanhSach(c))
 
 app.post('/auth/login', loginHandler)
 
 app.use('/socials/v2', authMW)
     .get('/socials/v2', async (c) => socialDataHandler2(c))
 
-app.use('/short', authMW).post('/short', createHandler).get('/short', listHandler)
-app.use('/me', authMW).get('/me', personalHandler)
+// app.use('/short', authMW).post('/short', createHandler).get('/short', listHandler)
+// app.use('/me', authMW).get('/me', personalHandler)
 
 app.get('/*', (c) => c.json({error: 'Endpoint not found'}, 404))
 

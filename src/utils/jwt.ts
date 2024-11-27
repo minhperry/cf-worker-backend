@@ -12,10 +12,14 @@ export const genJWT = async (role: string, key: string) => {
         .sign(new TextEncoder().encode(key))
 }
 
-export const getField = (context: Context, key: string) => {
-    const field = context.get(key)
-    if (field === undefined) return undefined
-    else return field
-}
+export type VariabledContext = Context<{
+    Variables: {
+        user: string
+    }
+}>
 
-export const getUserField = (context: Context) => getField(context, 'user')
+export const getUserField = (context: VariabledContext) => {
+    const user = context.get('user' as any)
+    if (user === undefined) return undefined
+    else return user
+}
