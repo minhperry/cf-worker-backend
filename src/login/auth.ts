@@ -4,11 +4,13 @@ import { genJWT } from "../utils/jwt"
 export const loginHandler = async (c: Context) => {
     let password;
     try {
-        let { password } = await c.req.json()
+        password = (await c.req.json()).password
     } catch (e) {
         return c.json({ error: 'Invalid payload' }, 400)
     }
     const { PASSWORD, MYKEY, JWT_SIGNER } = c.env
+
+    console.log(password)
 
     if (password === PASSWORD) {
         const token = await genJWT('recruiter', JWT_SIGNER)
